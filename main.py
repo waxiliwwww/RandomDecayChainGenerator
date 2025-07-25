@@ -64,14 +64,14 @@ class ConservationChecker:
         # 计算初始总量子数
         init_values = self._calculate_total_properties(parents)
         if len(parents) > 1:
-            init_values['mass'] = ecms
+            init_values['energy'] = ecms
       
         # 计算产物总量子数
         final_values = self._calculate_total_properties(children)
       
         # 检查物理定律是否满足
         for quantum in final_values:
-            if quantum == 'mass':
+            if quantum == 'energy':
                 if final_values[quantum] >= init_values[quantum]:
                     return False
             # 对于其他量，如果有规则且初态和末态不相等，则返回False
@@ -84,7 +84,7 @@ class ConservationChecker:
         """计算量子数总和"""
         return {
             'charge': sum(p.charge for p in particles),
-            'mass': sum(p.mass for p in particles),
+            'energy': sum(p.mass for p in particles),
             'strangeness': sum(p.strangeness for p in particles),
             'baryon_number': sum(p.baryon_number for p in particles),
             'lepton_number': sum(1 for p in particles if p.is_lepton and not p.is_quark),
